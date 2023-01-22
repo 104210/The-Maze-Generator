@@ -93,7 +93,7 @@ MUSIC = []
 track_names = []
 # Btw, all of the default music below comes from a game called VVVVVV.
 # I decided to not include the default music.
-# Comment out the below line if you don't want any music.
+# Comment out the below lines if you don't want any music.
 
 # track_names.extend([
 #     "Predestined Fate Remixed.mp3",
