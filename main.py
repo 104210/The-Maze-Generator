@@ -81,9 +81,9 @@ PLAYER_SPEED_NORMAL = 50//((COLUMNS * ROWS) ** 0.5) + 1
 PLAYER_SPEED_FAST = 68.75//((COLUMNS * ROWS) ** 0.5) + 1
 
 # Sets up constants for the enemies.
-ENEMY_SPEED_SLOW = 21.7391//((COLUMNS * ROWS) ** 0.5) + 1
+ENEMY_SPEED_SLOW = 25//((COLUMNS * ROWS) ** 0.5) + 1
 ENEMY_SPEED_NORMAL = 31.25//((COLUMNS * ROWS) ** 0.5) + 1
-ENEMY_SPEED_FAST = 45.8984//((COLUMNS * ROWS) ** 0.5) + 1
+ENEMY_SPEED_FAST = 46.875//((COLUMNS * ROWS) ** 0.5) + 1
 
 # The below list will hold the actual music that pygame will use.
 MUSIC = []
@@ -242,7 +242,7 @@ class Player(SPRITE):
             # it again.
             powerups.remove(collided_sprite)
             
-            self.powerup_distance = (((COLUMNS*ROWS) ** 0.5) - 1) * 0.8173828125
+            self.powerup_distance = (((COLUMNS*ROWS) ** 0.5) - 1) * 0.875
         
 
 class PowerUp(SPRITE):
@@ -282,7 +282,7 @@ class PowerUp(SPRITE):
 
                     # Bad powerups are slightly more common.
                     # This makes the good powerups feel more special / valuable.
-                    selected_powerup_type = choices([1, 2], [42.8571, 57.1428], k=1)[0]
+                    selected_powerup_type = choices([1, 2], [40, 60], k=1)[0]
 
                     powerup = PowerUp(
                         type=selected_powerup_type,
@@ -365,7 +365,7 @@ class Enemy(SPRITE):
                     # Explanation: The chances of an enemy being type 1 is 71.875% and so on.
                     selected_enemy_type = choices([1, 2], [75, 25], k=1)[0]
                     # Explanation: The chances of an enemy having a powerup of type 1 is 23.4375% and so on.
-                    selected_enemy_powerup_type = choices([1, 2, 3], [23.4375, 14.0625, 62.5], k=1)[0]
+                    selected_enemy_powerup_type = choices([1, 2, 3], [25, 15, 60], k=1)[0]
 
                     enemy = Enemy(
                         enemy_type=selected_enemy_type,
@@ -637,8 +637,11 @@ while True:
 
             # Stop any music currently playing
             pygame.mixer.stop()
-            # and play the epic music.
-            MUSIC[0].play()
+            # and try to play the epic music.
+            try:
+                MUSIC[0].play()
+            except IndexError:
+                print("Couldn't find the track: MUSIC[0].")
 
     # All of these are groups.
     player = pygame.sprite.GroupSingle(Player())
